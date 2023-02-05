@@ -22,7 +22,8 @@ df.describe()
 df[0:10]
 
 # %%
-# df["travel_time"] = (df["tpep_dropoff_datetime"] - df["tpep_pickup_datetime"]) / pd.Timedelta(1, 'hour')
+df["travel_time"] = (df["tpep_dropoff_datetime"] -
+                     df["tpep_pickup_datetime"]) / pd.Timedelta(1, 'hour')
 travel_time_hours = (df["tpep_dropoff_datetime"] -
                      df["tpep_pickup_datetime"]) / pd.Timedelta(1, 'hour')
 
@@ -30,5 +31,14 @@ travel_time_hours = (df["tpep_dropoff_datetime"] -
 speed = df["trip_distance"] / travel_time_hours
 
 # %%
-speed.mean()
+speed = speed.replace(np.inf, np.nan)
+speed.mean()  # 17.093514389056462
+
+# I came up with roughly the same answer but he used
+# this to remove lines with bad data
+
+# mask = df['tpep_dropoff_datetime'] > df['tpep_pickup_datetime']
+# df = df[mask]
+# %%
+speed.describe()
 # %%
