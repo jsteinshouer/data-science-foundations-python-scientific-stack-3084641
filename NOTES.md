@@ -9,3 +9,6 @@
 
 - Read entire CSV into memory
 - Using a machine in the cloud with a lot of memory to process a large dataset can be more cost effective that trying to run a big data platform - tear it down when finished
+
+## Ch4 
+- `df.apply` - Apply a function to every row in the dataFrame
