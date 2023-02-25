@@ -32,27 +32,21 @@ df
 # %%
 # Add tip percent
 
-df['tip_percent'] = df['tip_amount'] / df['fare_amount'] * 100
+df['tip_percent'] = df['tip_amount'] / df['total_amount'] * 100
 df['tip_percent']
 # %%
 # Create a bar chart of average tip % per passenger_count
 
-df_ = (
+df_by_count = (
     df
     .groupby(['passenger_count'], as_index=False)
     ['tip_percent']
-    .median()
+    .mean()
 )
-df_
 
-# df_['tip_index'] = 0;
-# df_.pivot(
-#     columns='passenger_count',
-#     index='tip_index',
-#     values='tip_percent'
-# ).plot.bar(rot=0)
-
-df_.plot.bar(x='passenger_count', y='tip_percent')
+ny_chart = df_by_count.plot.bar(x='passenger_count', y='tip_percent')
+ny_chart.set_ylabel('Tip %')
+ny_chart.set_xlabel('Passenger Count')
 # %%
 # Create a bar chart of average tip % per day of week
 df['day'] = df['tpep_pickup_datetime'].dt.day_name()
@@ -62,7 +56,7 @@ df_by_day = (
     df
     .groupby(['dayofweek', 'day'], as_index=False)
     ['tip_percent']
-    .median()
+    .mean()
 )
 # df_by_day
 df_by_day.plot.bar(x='day', y='tip_percent')
